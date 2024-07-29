@@ -18,7 +18,11 @@ html {
 	align-items: center;
 	padding: 20px;
   }
-  
+  P {
+	font-family: "Hind Madurai", sans-serif;
+	font-size: 15px;
+	font-weight: 600;
+  }
   .chat-container {
 	display: flex;
 	flex-direction: column;
@@ -57,7 +61,7 @@ html {
 	white-space: pre-wrap;
 	color: #303030;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-	max-width: 80%;
+	max-width: 90%;
   }
   
   .chat-bubble::after {

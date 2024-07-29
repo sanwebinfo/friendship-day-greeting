@@ -12,7 +12,7 @@ const sanitizeName = (name) => {
     remove: /[*+~.()'"!:@]/g,
     lower: false,
     strict: false,
-  }) || 'Friend Name';
+  });
   cleanName = cleanName.replace(/\++/g, ' '); 
   cleanName = cleanName.replace(/\s+/g, ' ');
   cleanName = cleanName.replace(/%20+/g, ' ');
@@ -25,14 +25,14 @@ const sanitizeName = (name) => {
 
 const updateMetaTags = (cleanName, sanitizedURL) => {
   try {
-    document.title = `Happy Friendship Day, ${cleanName}`;
-    document.querySelector('meta[name="description"]').setAttribute('content', `A special Friendship Day greeting for ${cleanName}.`);
+    document.title = `${cleanName} - Happy Friendship Day`;
+    document.querySelector('meta[name="description"]').setAttribute('content', `${cleanName} a special friendship day greeting for you.`);
     document.querySelector('link[rel="canonical"]').setAttribute('href', sanitizedURL.toString());
-    document.querySelector('meta[property="og:title"]').setAttribute('content', `Happy Friendship Day, ${cleanName}`);
-    document.querySelector('meta[property="og:description"]').setAttribute('content', `A special Friendship Day greeting for ${cleanName}.`);
+    document.querySelector('meta[property="og:title"]').setAttribute('content', `${cleanName} - Happy Friendship Day`);
+    document.querySelector('meta[property="og:description"]').setAttribute('content', `${cleanName} a special friendship day greeting for you.`);
     document.querySelector('meta[property="og:url"]').setAttribute('content', sanitizedURL.toString());
-    document.querySelector('meta[name="twitter:title"]').setAttribute('content', `Happy Friendship Day, ${cleanName}`);
-    document.querySelector('meta[name="twitter:description"]').setAttribute('content', `A special Friendship Day greeting for ${cleanName}.`);
+    document.querySelector('meta[name="twitter:title"]').setAttribute('content', `${cleanName} - Happy Friendship Day`);
+    document.querySelector('meta[name="twitter:description"]').setAttribute('content', `${cleanName} a special friendship day greeting for you.`);
     document.querySelector('meta[name="twitter:url"]').setAttribute('content', sanitizedURL.toString());
   } catch (error) {
     console.error("Error updating meta tags: ", error);
@@ -53,7 +53,7 @@ const App = () => {
       // @ts-ignore
       const url = new URL(window.location);
       const search = new URLSearchParams(url.search);
-      const name = search.get('name') || 'Friend Name';
+      const name = search.get('name') || '';
       const user = slugify(name, {
         replacement: '-',
         remove: /[$%*_+~.()'"!\-:@]+/g,
@@ -103,8 +103,7 @@ const App = () => {
   }, []);
 
   const handleInputChange = (e) => {
-    const newValue = e.target.value;
-    setInputName(newValue);
+    setInputName(e.target.value);
     setError('');
   };
 
@@ -154,22 +153,22 @@ const App = () => {
 
   return (
     <div class="chat-container relative">
-     {alertMessage && (
+      {alertMessage && (
         <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
-        <div
-          ref={alertRef}
-          class="bg-yellow-500 text-black py-3 px-4 rounded-lg shadow-lg max-w-xs w-full sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl flex items-center"
-        >
-        <p class="flex-grow break-words">{alertMessage}</p>
-        <button
-          class="ml-4 text-black p-2 rounded-full focus:outline-none"
-          onClick={() => setAlertMessage('')}
-        >
-         &times;
-        </button>
-      </div>
-      </div>
-    )}
+          <div
+            ref={alertRef}
+            class="bg-yellow-500 text-black py-3 px-4 rounded-lg shadow-lg max-w-xs w-full sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl flex items-center"
+          >
+            <p class="flex-grow break-words">{alertMessage}</p>
+            <button
+              class="ml-4 text-black p-2 rounded-full focus:outline-none"
+              onClick={() => setAlertMessage('')}
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
       <br />
       <br />
       <div class="chat-box" ref={chatBoxRef}>
@@ -179,45 +178,49 @@ const App = () => {
           <p class="chat-error">{error}</p>
         ) : (
           <>
-            <div class="chat-bubble right">
-              {friendName ? `😉 ${friendName} 👋` : 'Dear Friend, Happy Friendship Day'}
+            <div class="chat-bubble right shadow-md focus:outline-none transition-transform duration-200 transform hover:scale-105">
+              {friendName ? `😉 ${friendName} 👋` : '👋 Your Friend Name Here'}
               <div class="chat-time">{currentTime}</div>
             </div>
-            <div class="chat-bubble left">
+            <div class="chat-bubble left shadow-md focus:outline-none transition-transform duration-200 transform hover:scale-105">
               <p>Happy Friendship Day 🥳</p>
               <div class="chat-time">{currentTime}</div>
             </div>
-            <div class="chat-bubble right">
+            <div class="chat-bubble right shadow-md focus:outline-none transition-transform duration-200 transform hover:scale-105">
               <p>Friendship is a symbol of unity, always preserve it 💜</p>
               <div class="chat-time">{currentTime}</div>
             </div>
-            <div class="chat-bubble left">
-              <p>In the garden of life, friends are the flowers that make it bloom with joy 🎁</p>
+            <div class="chat-bubble left shadow-md focus:outline-none transition-transform duration-200 transform hover:scale-105">
+              <p>In the garden of life, friends are the flowers that<br />make it bloom with joy 🎁</p>
               <div class="chat-time">{currentTime}</div>
             </div>
             <br />
           </>
         )}
       </div>
-      <button type="button" onClick={handleCopyToClipboard} class="px-6 py-3 mt-4 rounded-full bg-blue-600 text-white font-bold uppercase border border-green-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
-      Copy Greeting URL
+      <br />
+      <button type="button" onClick={handleCopyToClipboard} class="px-6 py-3 mt-4 rounded-lg text-white bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-500 hover:to-teal-700 shadow-md focus:outline-none transition-transform duration-200 transform hover:scale-105">
+        Copy Greeting URL
       </button>
       <br />
-      <div class="form-box">
-        <form onSubmit={handleFormSubmit} class="mt-6 flex flex-col items-center gap-4">
+      <br />
+      <form onSubmit={handleFormSubmit}>
+        <div class="flex flex-col w-full max-w-md space-y-4 p-6 bg-white rounded-lg shadow-md">
+          <h1 class="text-base font-semibold text-center mb-4">Enter Your Friend's Name</h1>
+          <label class="text-gray-700">Name:</label>
           <input
             type="text"
-            onChange={handleInputChange}
-            placeholder="Enter your friend's name"
-            class="text-center rounded-full p-3 border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors"
-            required
+            value={inputName}
+            onInput={handleInputChange}
+            class="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            placeholder="Friend Name"
           />
-          <button type="submit" class="px-6 py-3 rounded-full bg-purple-600 text-white font-bold uppercase border border-green-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
-            Submit
+          {error && <p class="text-red-500 mt-2">{error}</p>}
+          <button type="submit" class="px-6 py-3 mt-4 rounded-lg text-white bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-500 hover:to-teal-700 shadow-md focus:outline-none transition-transform duration-200 transform hover:scale-105">
+            Create Greeting
           </button>
-        </form>
-      </div>
-      <br />
+        </div>
+      </form>
       <br />
       <Footer />
     </div>
