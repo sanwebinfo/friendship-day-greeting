@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+  
+html {
+	font-family: "Hind Madurai", sans-serif;
+	min-height: 100vh;
+	margin: 0;
+	padding: 0;
+}
+  body {
+	margin: 0;
+	font-family: "Hind Madurai", sans-serif;
+	font-weight: 600;
+	background: linear-gradient(135deg, #f8ffae 0%, #43c6ac 100%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+  }
+  
+  .chat-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	max-width: 400px;
+	padding: 20px;
+  }
+  
+  .chat-box, .form-box {
+	font-family: "Hind Madurai", sans-serif;
+	background-color: #128c7e;
+	border-radius: 10px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 20px;
+  }
+  
+  .chat-header {
+	font-family: "Hind Madurai", sans-serif;
+	font-size: 1.2em;
+	color: #ece5dd;
+	margin-bottom: 10px;
+	text-align: center;
+  }
+  
+  .chat-bubble {
+	font-family: "Hind Madurai", sans-serif;
+	position: relative;
+	background-color: #dcf8c6;
+	border-radius: 10px;
+	padding: 15px;
+	margin: 10px 0;
+	word-wrap: break-word;
+	white-space: pre-wrap;
+	color: #303030;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	max-width: 80%;
+  }
+  
+  .chat-bubble::after {
+	content: "";
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-style: solid;
+  }
+  
+  .chat-bubble.left {
+	align-self: flex-start;
+  }
+  
+  .chat-bubble.left::after {
+	left: -10px;
+	top: 10px;
+	border-width: 10px 10px 10px 0;
+	border-color: transparent #dcf8c6 transparent transparent;
+  }
+  
+  .chat-bubble.right {
+	align-self: flex-end;
+  }
+  
+  .chat-bubble.right::after {
+	right: -10px;
+	top: 10px;
+	border-width: 10px 0 10px 10px;
+	border-color: transparent transparent transparent #dcf8c6;
+  }
+  
+  .chat-error {
+	font-family: "Hind Madurai", sans-serif;
+	color: rgb(228, 146, 146);
+	font-weight: bold;
+	text-align: center;
+  }
+  
+  .form-box {
+	background-color: linear-gradient(135deg, #f8ffae 0%, #43c6ac 100%);
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .chat-form {
+	display: flex;
+	flex-direction: column;
+  }
+  
+  .chat-input {
+	font-family: "Hind Madurai", sans-serif;
+	padding: 10px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	font-size: 1em;
+  }
+  
+  .chat-submit {
+	font-family: "Hind Madurai", sans-serif;
+	padding: 10px;
+	background-color: #25d366;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	font-size: 1em;
+	cursor: pointer;
+	transition: background-color 0.3s;
+  }
+  
+  .chat-submit:focus {
+	outline: none;
+  }
+  
+  .chat-submit:disabled {
+	background-color: #ccc;
+	cursor: not-allowed;
+  }
+  
+  .chat-input:invalid {
+	border-color: rgb(245, 119, 119);
+  }
+  
+  .chat-input:valid {
+	border-color: rgb(72, 245, 72);
+  }
+  .chat-time {
+	font-size: 0.65rem;
+	color: #888;
+	margin-top: 0.5rem;
+	text-align: right;
+  }
