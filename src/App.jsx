@@ -12,7 +12,7 @@ const sanitizeName = (name) => {
     remove: /[*+~.()'"!:@]/g,
     lower: false,
     strict: false,
-  }) || 'Your Name';
+  }) || 'Friend Name';
   cleanName = cleanName.replace(/\++/g, ' '); 
   cleanName = cleanName.replace(/\s+/g, ' ');
   cleanName = cleanName.replace(/%20+/g, ' ');
@@ -53,7 +53,7 @@ const App = () => {
       // @ts-ignore
       const url = new URL(window.location);
       const search = new URLSearchParams(url.search);
-      const name = search.get('name') || 'Your Name';
+      const name = search.get('name') || 'Friend Name';
       const user = slugify(name, {
         replacement: '-',
         remove: /[$%*_+~.()'"!\-:@]+/g,

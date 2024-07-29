@@ -30,7 +30,7 @@ cd friendship-day-greeting
 - Static Files `/public` Files
 - `index.html` : Main File load the Project  
 
-**LIVE URL : <https://frnds.netlify.app/?name=Your-Name>**  
+**LIVE URL : <https://frnds.netlify.app/?name=Friend-Name>**  
 
 ## DOCS
 
