@@ -9,8 +9,8 @@ dependencies:
     specifier: ^3.1.6
     version: 3.1.6
   preact:
-    specifier: ^10.23.1
-    version: 10.23.1
+    specifier: ^10.23.2
+    version: 10.23.2
   slugify:
     specifier: ^1.6.6
     version: 1.6.6
@@ -18,7 +18,7 @@ dependencies:
 devDependencies:
   '@preact/preset-vite':
     specifier: ^2.9.0
-    version: 2.9.0(@babel/core@7.24.9)(preact@10.23.1)(vite@5.4.1)
+    version: 2.9.0(@babel/core@7.24.9)(preact@10.23.2)(vite@5.4.1)
   autoprefixer:
     specifier: ^10.4.20
     version: 10.4.20(postcss@8.4.41)
@@ -543,7 +543,7 @@ packages:
     dev: true
     optional: true
 
-  /@preact/preset-vite@2.9.0(@babel/core@7.24.9)(preact@10.23.1)(vite@5.4.1):
+  /@preact/preset-vite@2.9.0(@babel/core@7.24.9)(preact@10.23.2)(vite@5.4.1):
     resolution: {integrity: sha512-B9yVT7AkR6owrt84K3pLNyaKSvlioKdw65VqE/zMiR6HMovPekpsrwBNs5DJhBFEd5cvLMtCjHNHZ9P7Oblveg==}
     peerDependencies:
       '@babel/core': 7.x
@@ -553,7 +553,7 @@ packages:
       '@babel/core': 7.24.9
       '@babel/plugin-transform-react-jsx': 7.24.7(@babel/core@7.24.9)
       '@babel/plugin-transform-react-jsx-development': 7.24.7(@babel/core@7.24.9)
-      '@prefresh/vite': 2.4.6(preact@10.23.1)(vite@5.4.1)
+      '@prefresh/vite': 2.4.6(preact@10.23.2)(vite@5.4.1)
       '@rollup/pluginutils': 4.2.1
       babel-plugin-transform-hook-names: 1.0.2(@babel/core@7.24.9)
       debug: 4.3.6
@@ -573,19 +573,19 @@ packages:
     resolution: {integrity: sha512-uG3jGEAysxWoyG3XkYfjYHgaySFrSsaEb4GagLzYaxlydbuREtaX+FTxuIidp241RaLl85XoHg9Ej6E4+V1pcg==}
     dev: true
 
-  /@prefresh/core@1.5.2(preact@10.23.1):
+  /@prefresh/core@1.5.2(preact@10.23.2):
     resolution: {integrity: sha512-A/08vkaM1FogrCII5PZKCrygxSsc11obExBScm3JF1CryK2uDS3ZXeni7FeKCx1nYdUkj4UcJxzPzc1WliMzZA==}
     peerDependencies:
       preact: ^10.0.0
     dependencies:
-      preact: 10.23.1
+      preact: 10.23.2
     dev: true
 
   /@prefresh/utils@1.2.0:
     resolution: {integrity: sha512-KtC/fZw+oqtwOLUFM9UtiitB0JsVX0zLKNyRTA332sqREqSALIIQQxdUCS1P3xR/jT1e2e8/5rwH6gdcMLEmsQ==}
     dev: true
 
-  /@prefresh/vite@2.4.6(preact@10.23.1)(vite@5.4.1):
+  /@prefresh/vite@2.4.6(preact@10.23.2)(vite@5.4.1):
     resolution: {integrity: sha512-miYbTl2J1YNaQJWyWHJzyIpNh7vKUuXC1qCDRzPeWjhQ+9bxeXkUBGDGd9I1f37R5GQYi1S65AN5oR0BR2WzvQ==}
     peerDependencies:
       preact: ^10.4.0
@@ -593,10 +593,10 @@ packages:
     dependencies:
       '@babel/core': 7.24.9
       '@prefresh/babel-plugin': 0.5.1
-      '@prefresh/core': 1.5.2(preact@10.23.1)
+      '@prefresh/core': 1.5.2(preact@10.23.2)
       '@prefresh/utils': 1.2.0
       '@rollup/pluginutils': 4.2.1
-      preact: 10.23.1
+      preact: 10.23.2
       vite: 5.4.1
     transitivePeerDependencies:
       - supports-color
@@ -1472,8 +1472,8 @@ packages:
       source-map-js: 1.2.0
     dev: true
 
-  /preact@10.23.1:
-    resolution: {integrity: sha512-O5UdRsNh4vdZaTieWe3XOgSpdMAmkIYBCT3VhQDlKrzyCm8lUYsk0fmVEvoQQifoOjFRTaHZO69ylrzTW2BH+A==}
+  /preact@10.23.2:
+    resolution: {integrity: sha512-kKYfePf9rzKnxOAKDpsWhg/ysrHPqT+yQ7UW4JjdnqjFIeNUnNcEJvhuA8fDenxAGWzUqtd51DfVg7xp/8T9NA==}
 
   /queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
