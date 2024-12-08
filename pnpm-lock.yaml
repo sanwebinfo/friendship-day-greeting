@@ -19,8 +19,8 @@ importers:
         version: 1.6.6
     devDependencies:
       '@preact/preset-vite':
-        specifier: ^2.9.2
-        version: 2.9.2(@babel/core@7.24.9)(preact@10.25.1)(vite@5.4.11)
+        specifier: ^2.9.3
+        version: 2.9.3(@babel/core@7.24.9)(preact@10.25.1)(vite@5.4.11)
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.4.49)
@@ -320,8 +320,8 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
 
-  '@preact/preset-vite@2.9.2':
-    resolution: {integrity: sha512-Gtp0pPd4s/bZiPAvn4Lhd/on5YZXd/AaXoO03MMtLTmH7nsH3BuXFZnBqvXpqozBDthjxwDWwGEJcf129ctY+g==}
+  '@preact/preset-vite@2.9.3':
+    resolution: {integrity: sha512-uVDSKsFnPa/bmRTAcPiYpTvC04T1lhIH2ho3CJZLYibwcwliElS/i64iyATZkgR4DJxSc/JwOCSQS4IF/a03OQ==}
     peerDependencies:
       '@babel/core': 7.x
       vite: 2.x || 3.x || 4.x || 5.x || 6.x
@@ -1304,7 +1304,7 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@preact/preset-vite@2.9.2(@babel/core@7.24.9)(preact@10.25.1)(vite@5.4.11)':
+  '@preact/preset-vite@2.9.3(@babel/core@7.24.9)(preact@10.25.1)(vite@5.4.11)':
     dependencies:
       '@babel/code-frame': 7.24.7
       '@babel/core': 7.24.9
