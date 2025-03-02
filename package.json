@@ -8,7 +8,7 @@
 	},
 	"dependencies": {
 		"dompurify": "^3.2.4",
-		"preact": "^10.26.2",
+		"preact": "^10.26.4",
 		"slugify": "^1.6.6"
 	},
 	"devDependencies": {
