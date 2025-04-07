@@ -34,7 +34,7 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
       vite:
-        specifier: ^6.2.4
+        specifier: ^6.2.5
         version: 6.2.5(jiti@1.21.6)(yaml@2.5.0)
 
 packages:
