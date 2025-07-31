@@ -28,9 +28,9 @@ body {
 button, input, a {
   @apply transition-all duration-200 ease-out;
   font-family: "Anek Tamil", sans-serif;
+  font-weight: 600;
   will-change: transform, opacity;
 }
-
 @media (min-width: 768px) {
   ::-webkit-scrollbar {
     width: 8px;

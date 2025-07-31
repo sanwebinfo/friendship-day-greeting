@@ -167,7 +167,7 @@ const App = () => {
       const sanitizedURL = new URL(window.location);
       navigator.clipboard.writeText(sanitizedURL.toString())
         .then(() => {
-          showAlert('Greeting URL copied to clipboard');
+          showAlert('Greeting URL copied');
         })
         .catch((err) => {
           console.error('Failed to copy: ', err);
@@ -199,10 +199,20 @@ const App = () => {
         {/* Chat Box */}
         <div 
           ref={chatBoxRef}
-          class="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
+          class="relative bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
         >
-          <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-5">
-            <h1 class="text-white text-xl font-bold text-center tracking-tight">Happy Friendship Day 🎉</h1>
+          <button
+            onClick={handleCopyToClipboard}
+            class="absolute top-3 right-3 z-10 bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-md hover:bg-white hover:shadow-lg active:scale-95 focus:outline-none transition-all duration-200"
+            aria-label="Copy greeting URL"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+            </svg>
+          </button>
+
+          <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-4">
+            <h1 class="text-white text-lg font-bold text-center tracking-tight">Happy Friendship Day 🎉</h1>
           </div>
           
           <div class="p-5 space-y-4">
@@ -246,25 +256,18 @@ const App = () => {
 
         {/* Action Buttons */}
         <div class="flex flex-col space-y-4">
-          <button 
-            onClick={handleCopyToClipboard} 
-            class="w-full px-6 py-3 rounded-xl text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 shadow-md focus:outline-none transition-all duration-200 active:scale-95 will-change-transform"
-          >
-            <span class="font-medium">Copy Greeting URL</span>
-          </button>
-
           <form onSubmit={handleFormSubmit} class="bg-white rounded-2xl shadow-lg overflow-hidden">
             <div class="p-5 space-y-4">
-              <h2 class="text-xl font-bold text-center text-gray-800 tracking-tight">Create Your Greeting</h2>
+              <h2 class="text-lg font-bold text-center text-gray-800 tracking-tight">Create Your Greeting 🎀</h2>
               
               <div>
-                <label class="block text-gray-700 text-sm font-medium mb-2">Friend's Name</label>
+                <label class="block text-gray-700 text-sm font-medium mb-2">🙂‍ Friend's Name</label>
                 <input
                   type="text"
                   value={inputName}
                   onInput={handleInputChange}
                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
-                  placeholder="Enter friend's name"
+                  placeholder="✏️ Enter friend's name"
                 />
                 {error && <p class="mt-2 text-sm text-red-600">{error}</p>}
               </div>
@@ -273,7 +276,7 @@ const App = () => {
                 type="submit" 
                 class="w-full px-6 py-3 rounded-xl text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 shadow-md focus:outline-none transition-all duration-200 active:scale-95 will-change-transform"
               >
-                <span class="font-medium">Create Greeting</span>
+                <span class="font-bold">💚 Create</span>
               </button>
             </div>
           </form>
