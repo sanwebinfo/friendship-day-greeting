@@ -45,8 +45,37 @@ const App = () => {
   const [error, setError] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
   const [currentTime, setCurrentTime] = useState('');
-  const chatBoxRef = useRef(null); // Reference to the chat box for scrolling
-  const alertRef = useRef(null); // Reference to the alert box
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const chatBoxRef = useRef(null);
+  const alertTimeoutRef = useRef(null);
+  const timeIntervalRef = useRef(null);
+
+  // Memoized time formatter to prevent unnecessary recreations
+  const formatTime = useRef(() => {
+    const now = new Date();
+    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Kolkata' };
+    const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Asia/Kolkata' };
+    // @ts-ignore
+    const timeString = now.toLocaleTimeString('en-IN', timeOptions);
+    // @ts-ignore
+    const dateString = now.toLocaleDateString('en-IN', dateOptions);
+    return `${dateString} ${timeString}`;
+  }).current;
+
+  const showAlert = (message) => {
+    setAlertMessage(message);
+    setIsAlertVisible(true);
+    
+    // Clear any existing timeout
+    if (alertTimeoutRef.current) {
+      clearTimeout(alertTimeoutRef.current);
+    }
+    
+    // Set new timeout
+    alertTimeoutRef.current = setTimeout(() => {
+      setIsAlertVisible(false);
+    }, 3000);
+  };
 
   useEffect(() => {
     try {
@@ -84,23 +113,22 @@ const App = () => {
       console.error("Error occurred: ", err);
     }
 
-    // Function to update current time
-    const updateTime = () => {
-      const now = new Date();
-      const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Kolkata' };
-      const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Asia/Kolkata' };
-      // @ts-ignore
-      const timeString = now.toLocaleTimeString('en-IN', timeOptions);
-      // @ts-ignore
-      const dateString = now.toLocaleDateString('en-IN', dateOptions);
-      setCurrentTime(`${dateString} ${timeString}`);
+    // Initialize time and set interval
+    setCurrentTime(formatTime());
+    timeIntervalRef.current = setInterval(() => {
+      setCurrentTime(formatTime());
+    }, 1000);
+
+    // Cleanup
+    return () => {
+      if (timeIntervalRef.current) {
+        clearInterval(timeIntervalRef.current);
+      }
+      if (alertTimeoutRef.current) {
+        clearTimeout(alertTimeoutRef.current);
+      }
     };
-
-    updateTime();
-    const intervalId = setInterval(updateTime, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
+  }, [formatTime]);
 
   const handleInputChange = (e) => {
     setInputName(e.target.value);
@@ -117,15 +145,17 @@ const App = () => {
       window.history.replaceState(null, '', sanitizedURL.toString());
       updateMetaTags(cleanName, sanitizedURL);
       setFriendName(cleanName);
-      setInputName(''); // Clearing input after successful submission
+      setInputName('');
       setError('');
-      setAlertMessage(`Greeting Created for : ${cleanName}`);
-      setTimeout(() => setAlertMessage(''), 3000); // Hide alert after 3 seconds
+      showAlert(`Greeting created for: ${cleanName}`);
 
-      // Scroll to the chat bubble after successful submission
+      // Scroll to chat after slight delay
       setTimeout(() => {
-        chatBoxRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 300); // Small delay to ensure rendering is complete
+        chatBoxRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest'
+        });
+      }, 100);
     } else {
       setError('Invalid name provided. Please ensure it is between 2 to 36 characters.');
     }
@@ -137,91 +167,119 @@ const App = () => {
       const sanitizedURL = new URL(window.location);
       navigator.clipboard.writeText(sanitizedURL.toString())
         .then(() => {
-          setAlertMessage('Greeting URL copied to clipboard');
-          setTimeout(() => setAlertMessage(''), 3000); // Hide alert after 3 seconds
+          showAlert('Greeting URL copied to clipboard');
         })
         .catch((err) => {
           console.error('Failed to copy: ', err);
-          setAlertMessage('Failed to copy the URL. Please try again.');
-          setTimeout(() => setAlertMessage(''), 3000); // Hide alert after 3 seconds
+          showAlert('Failed to copy the URL. Please try again.');
         });
     } catch (error) {
-      setAlertMessage('An error occurred while copying the URL.');
-      setTimeout(() => setAlertMessage(''), 3000); // Hide alert after 3 seconds
+      showAlert('An error occurred while copying the URL.');
     }
   };
 
   return (
-    <div class="chat-container relative">
-      {alertMessage && (
-        <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
-          <div
-            ref={alertRef}
-            class="bg-yellow-500 text-black py-3 px-4 rounded-lg shadow-lg max-w-xs w-full sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl flex items-center"
+    <div class="min-h-screen flex flex-col items-center py-8 px-4 bg-gradient-to-br from-indigo-50 to-purple-50">
+      {/* Snackbar Notification */}
+      <div class={`fixed bottom-4 left-1/2 transform -translate-x-1/2 transition-all duration-300 ease-in-out z-50 ${
+        isAlertVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+      }`}>
+        <div class="bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg flex items-center max-w-xs sm:max-w-sm">
+          <span class="flex-grow">{alertMessage}</span>
+          <button 
+            class="ml-4 text-gray-300 hover:text-white focus:outline-none"
+            onClick={() => setIsAlertVisible(false)}
           >
-            <p class="flex-grow break-words">{alertMessage}</p>
-            <button
-              class="ml-4 text-black p-2 rounded-full focus:outline-none"
-              onClick={() => setAlertMessage('')}
-            >
-              &times;
-            </button>
-          </div>
-        </div>
-      )}
-      <br />
-      <br />
-      <div class="chat-box" ref={chatBoxRef}>
-        <div class="chat-header">Happy Friendship Day 🥳</div>
-        <br />
-        {error ? (
-          <p class="chat-error">{error}</p>
-        ) : (
-          <>
-            <div class="chat-bubble right shadow-md focus:outline-none transition-transform duration-200 transform hover:scale-105">
-              {friendName ? `😉 ${friendName} 👋` : '👋 Your Friend Name Here'}
-              <div class="chat-time">{currentTime}</div>
-            </div>
-            <div class="chat-bubble left shadow-md focus:outline-none transition-transform duration-200 transform hover:scale-105">
-              <p>Happy Friendship Day 🥳</p>
-              <div class="chat-time">{currentTime}</div>
-            </div>
-            <div class="chat-bubble right shadow-md focus:outline-none transition-transform duration-200 transform hover:scale-105">
-              <p>Friendship is a symbol of unity, always preserve it 💜</p>
-              <div class="chat-time">{currentTime}</div>
-            </div>
-            <div class="chat-bubble left shadow-md focus:outline-none transition-transform duration-200 transform hover:scale-105">
-              <p>In the garden of life, friends are the flowers that<br />make it bloom with joy 🎁</p>
-              <div class="chat-time">{currentTime}</div>
-            </div>
-            <br />
-          </>
-        )}
-      </div>
-      <br />
-      <button type="button" onClick={handleCopyToClipboard} class="px-6 py-3 mt-4 rounded-lg text-white bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-500 hover:to-teal-700 shadow-md focus:outline-none transition-transform duration-200 transform hover:scale-105">
-        Copy Greeting URL
-      </button>
-      <br />
-      <br />
-      <form onSubmit={handleFormSubmit}>
-        <div class="flex flex-col w-full max-w-md space-y-4 p-6 bg-white rounded-lg shadow-md">
-          <h1 class="text-base font-semibold text-center mb-4">Enter Your Friend's Name</h1>
-          <label class="text-gray-700">Name:</label>
-          <input
-            type="text"
-            value={inputName}
-            onInput={handleInputChange}
-            class="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-            placeholder="Friend Name"
-          />
-          {error && <p class="text-red-500 mt-2">{error}</p>}
-          <button type="submit" class="px-6 py-3 mt-4 rounded-lg text-white bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-500 hover:to-teal-700 shadow-md focus:outline-none transition-transform duration-200 transform hover:scale-105">
-            Create Greeting
+            ✕
           </button>
         </div>
-      </form>
-      <br />
+      </div>
+
+      <main class="w-full max-w-md space-y-6">
+        {/* Chat Box */}
+        <div 
+          ref={chatBoxRef}
+          class="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
+        >
+          <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-5">
+            <h1 class="text-white text-xl font-bold text-center tracking-tight">Happy Friendship Day 🎉</h1>
+          </div>
+          
+          <div class="p-5 space-y-4">
+            {error ? (
+              <div class="bg-red-50 text-red-700 p-4 rounded-lg border-l-4 border-red-500">
+                <p class="font-medium">{error}</p>
+              </div>
+            ) : (
+              <>
+                <div class="flex justify-end">
+                  <div class="bg-purple-100 text-purple-900 rounded-2xl rounded-tr-none px-5 py-3 max-w-[85%] shadow-sm transform transition-transform duration-200 hover:scale-[1.02] will-change-transform">
+                    {friendName ? `😊 ${friendName} 👋` : '👋 Your Friend Name Here'}
+                    <div class="text-xs text-purple-500 mt-1 text-right">{currentTime}</div>
+                  </div>
+                </div>
+                
+                <div class="flex justify-start">
+                  <div class="bg-indigo-100 text-indigo-900 rounded-2xl rounded-tl-none px-5 py-3 max-w-[85%] shadow-sm transform transition-transform duration-200 hover:scale-[1.02] will-change-transform">
+                    <p>Happy Friendship Day 🎉</p>
+                    <div class="text-xs text-indigo-500 mt-1 text-right">{currentTime}</div>
+                  </div>
+                </div>
+                
+                <div class="flex justify-end">
+                  <div class="bg-purple-100 text-purple-900 rounded-2xl rounded-tr-none px-5 py-3 max-w-[85%] shadow-sm transform transition-transform duration-200 hover:scale-[1.02] will-change-transform">
+                    <p>Friendship is a symbol of unity, always preserve it 💜</p>
+                    <div class="text-xs text-purple-500 mt-1 text-right">{currentTime}</div>
+                  </div>
+                </div>
+                
+                <div class="flex justify-start">
+                  <div class="bg-indigo-100 text-indigo-900 rounded-2xl rounded-tl-none px-5 py-3 max-w-[85%] shadow-sm transform transition-transform duration-200 hover:scale-[1.02] will-change-transform">
+                    <p>In the garden of life, friends are the flowers that make it bloom with joy 🌸</p>
+                    <div class="text-xs text-indigo-500 mt-1 text-right">{currentTime}</div>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div class="flex flex-col space-y-4">
+          <button 
+            onClick={handleCopyToClipboard} 
+            class="w-full px-6 py-3 rounded-xl text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 shadow-md focus:outline-none transition-all duration-200 active:scale-95 will-change-transform"
+          >
+            <span class="font-medium">Copy Greeting URL</span>
+          </button>
+
+          <form onSubmit={handleFormSubmit} class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="p-5 space-y-4">
+              <h2 class="text-xl font-bold text-center text-gray-800 tracking-tight">Create Your Greeting</h2>
+              
+              <div>
+                <label class="block text-gray-700 text-sm font-medium mb-2">Friend's Name</label>
+                <input
+                  type="text"
+                  value={inputName}
+                  onInput={handleInputChange}
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                  placeholder="Enter friend's name"
+                />
+                {error && <p class="mt-2 text-sm text-red-600">{error}</p>}
+              </div>
+              
+              <button 
+                type="submit" 
+                class="w-full px-6 py-3 rounded-xl text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 shadow-md focus:outline-none transition-all duration-200 active:scale-95 will-change-transform"
+              >
+                <span class="font-medium">Create Greeting</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </main>
+
       <Footer />
     </div>
   );
