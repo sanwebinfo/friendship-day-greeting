@@ -1,0 +1,5 @@
+# Netlify redirects file, edit with your domain
+# https://www.netlify.com/docs/redirects/
+
+https://frnds.netlify.app/* https://wish.sanweb.info/:splat 301!
+http://frnds.netlify.app/* https://wish.sanweb.info/:splat 301!
