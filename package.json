@@ -14,7 +14,7 @@
 		"tailwindcss": "^4.1.18"
 	},
 	"devDependencies": {
-		"@preact/preset-vite": "^2.10.2",
+		"@preact/preset-vite": "^2.10.3",
 		"typescript": "^5.9.3",
 		"vite": "^7.3.1"
 	}
