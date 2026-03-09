@@ -12,7 +12,7 @@ importers:
         specifier: ^4.2.1
         version: 4.2.1(vite@7.3.1(jiti@2.6.1)(lightningcss@1.31.1))
       dompurify:
-        specifier: ^3.3.1
+        specifier: ^3.3.2
         version: 3.3.2
       preact:
         specifier: ^10.28.4
