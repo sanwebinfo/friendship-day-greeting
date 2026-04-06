@@ -10,7 +10,7 @@
 		"@tailwindcss/vite": "^4.2.2",
 		"dompurify": "^3.3.3",
 		"preact": "^10.29.1",
-		"slugify": "^1.6.8",
+		"slugify": "^1.6.9",
 		"tailwindcss": "^4.2.2"
 	},
 	"devDependencies": {
