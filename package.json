@@ -7,11 +7,11 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@tailwindcss/vite": "^4.2.4",
+		"@tailwindcss/vite": "^4.3.0",
 		"dompurify": "^3.4.2",
 		"preact": "^10.29.1",
 		"slugify": "^1.6.9",
-		"tailwindcss": "^4.2.4"
+		"tailwindcss": "^4.3.0"
 	},
 	"devDependencies": {
 		"@preact/preset-vite": "^2.10.5",
