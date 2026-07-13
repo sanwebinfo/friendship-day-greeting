@@ -9,7 +9,7 @@
 	"dependencies": {
 		"@tailwindcss/vite": "^4.3.2",
 		"dompurify": "^3.4.12",
-		"preact": "^10.29.4",
+		"preact": "^10.29.7",
 		"slugify": "^1.6.9",
 		"tailwindcss": "^4.3.2"
 	},
